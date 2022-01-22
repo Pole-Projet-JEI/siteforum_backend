@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import db from '../config/db.js';
 
-export const getSpeakers = (req,res) => {
-    db.query("SELECT * FROM Speaker",(err,result) => {
+export const getFormateurs = (req,res) => {
+    db.query("SELECT * FROM Formateur",(err,result) => {
         if (err) {
           console.log(err);
         } else {
@@ -11,7 +11,7 @@ export const getSpeakers = (req,res) => {
       });
     
 }
-export const createSpeaker = (req,res) => {
+export const createFormateur = (req,res) => {
 
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
@@ -23,7 +23,7 @@ export const createSpeaker = (req,res) => {
     //image
 
     db.query(
-        "INSERT INTO `Speaker`(`firstname`, `lastname`, `title`, `description`, `fb`, `insta`, `linkedin`) VALUES (?,?,?,?,?,?,?)",
+        "INSERT INTO `Formateur`(`firstname`, `lastname`, `title`, `description`, `fb`, `insta`, `linkedin`) VALUES (?,?,?,?,?,?,?)",
       [firstname,lastname,title,description,fb,insta,linkedin],
       (err,result) => {
 
@@ -35,11 +35,11 @@ export const createSpeaker = (req,res) => {
       }
     );
 }
-export const getSpeakerByID = (req,res) => {
+export const getFormateurByID = (req,res) => {
 
     const { id } = req.params;
 
-    db.query("SELECT * FROM Speaker WHERE id = ? ",{id}.id,(err,result) => {
+    db.query("SELECT * FROM Formateur WHERE id = ? ",{id}.id,(err,result) => {
         if (err) {
           console.log(err);
         } else {
@@ -48,18 +48,18 @@ export const getSpeakerByID = (req,res) => {
       });
 }
 
-export const deleteSpeaker = (req,res) => {
+export const deleteFormateur = (req,res) => {
     const { id } = req.params;
-    db.query("DELETE FROM `Speaker` WHERE id = ? ",{id}.id,(err,result) => {
+    db.query("DELETE FROM `Formateur` WHERE id = ? ",{id}.id,(err,result) => {
         if (err) {
           console.log(err);
         } else {
-          res.send(`Speaker with the ID ${id} has been deleted`);
+          res.send(`Formateur with the ID ${id} has been deleted`);
         }
       });
     
 }
-export const updateSpeaker = (req,res) => {
+export const updateFormateur = (req,res) => {
 
     const { id } = req.params;
     const firstname = req.body.firstname;
@@ -72,7 +72,7 @@ export const updateSpeaker = (req,res) => {
     const image = req.body.image;
     let newValues = [];
     
-    db.query("SELECT * FROM Speaker WHERE id = ? ",{id}.id,(err,result) => {
+    db.query("SELECT * FROM Formateur WHERE id = ? ",{id}.id,(err,result) => {
       if (err) {
         console.log(err);
       } else {
@@ -106,14 +106,13 @@ export const updateSpeaker = (req,res) => {
     }
     newValues[8] = {id}.id;
 
-    db.query("UPDATE `Speaker` SET `firstname`=?,`lastname`=?,`title`=?,`description`=?,`fb`=?,`insta`=?,`linkedin`=?,`image`=? WHERE id = ? ",newValues,(err,result) => {
+    db.query("UPDATE `Formateur` SET `firstname`=?,`lastname`=?,`title`=?,`description`=?,`fb`=?,`insta`=?,`linkedin`=?,`image`=? WHERE id = ? ",newValues,(err,result) => {
         if (err) {
           console.log(err);
         } else {
-          res.send(`Speaker with the ID ${id} has been updated`);
+          res.send(`Formateur with the ID ${id} has been updated`);
         }
       });
     
    
 }
-
